@@ -10,6 +10,8 @@ public class FPSMovement : MonoBehaviour
     public float speed;
     public bool isGrounded = false;
     public float jumpForce;
+
+    public FirstPersonCamera FPC;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,13 +35,19 @@ public class FPSMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.AddForce((x * transform.right + y * transform.forward) * speed, ForceMode.VelocityChange);
+        if(FPC.onComputer == false)
+        {
+            rb.AddForce((x * transform.right + y * transform.forward) * speed, ForceMode.VelocityChange);
+        }
     }
 
     void Jump()
     {
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-        isGrounded = false;
+        if(FPC.onComputer == false)
+        {
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
+        }
     }
 
     private void OnCollisionStay(Collision collision)
