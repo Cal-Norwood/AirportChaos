@@ -39,6 +39,16 @@ public class FirstPersonCamera : MonoBehaviour
             freeMove = false;
             StartCoroutine(ComputerCamTransition());
         }
+
+        if(onComputer == true)
+        {
+            player.transform.position = computerCam.transform.position;
+        }
+
+        if(onComputer == false && freeMove == false)
+        {
+            StartCoroutine(ComputerCamTransition());
+        }
     }
 
     private IEnumerator ComputerCamTransition()
@@ -47,9 +57,9 @@ public class FirstPersonCamera : MonoBehaviour
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
-            gameObject.SetActive(false);
+            player.transform.position = computerCam.transform.position;
             computerCam.SetActive(true);
-            player.transform.position = computerCam .transform.position;
+            gameObject.SetActive(false);
             yield return 0;
         }
         else
@@ -57,7 +67,6 @@ public class FirstPersonCamera : MonoBehaviour
             freeMove = true;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            gameObject.SetActive(true);
             computerCam.SetActive(false);
             yield return 0;
         }

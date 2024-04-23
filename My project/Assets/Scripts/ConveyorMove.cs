@@ -6,6 +6,9 @@ public class ConveyorMove : MonoBehaviour
 {
     private Rigidbody rb;
     public float conveyorSpeed;
+
+    public bool packageApproved;
+    public bool packageDenied;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +20,5 @@ public class ConveyorMove : MonoBehaviour
     {
         rb.position -= -transform.right * conveyorSpeed * Time.deltaTime;
         rb.MovePosition(rb.position + -transform.right * conveyorSpeed * Time.deltaTime);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        //Debug.Log("woking");
     }
 }

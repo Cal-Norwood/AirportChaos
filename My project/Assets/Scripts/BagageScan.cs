@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BagageScan : MonoBehaviour
 {
+    public Button approve;
+    public Button deny;
+    public int packageMoveForce;
+
+    public GameObject baggageInScanner;
+    public BoxCollider checkPointCollider;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +25,41 @@ public class BagageScan : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("woking");
+        if (other.tag == "Pickup")
+        {
+            approve.interactable = true;
+            deny.interactable = true;
+            baggageInScanner = other.gameObject.transform.parent.gameObject;
+        }
+    }
+
+    public void Approve()
+    {
+        checkPointCollider.isTrigger = true;
+        StartCoroutine(PackageMoveUp());
+    }
+
+    public void Deny()
+    {
+        checkPointCollider.isTrigger = true;
+        StartCoroutine(PackageMoveDown());
+    }
+
+    private IEnumerator PackageMoveUp()
+    {
+        while(true)
+        {
+            baggageInScanner.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 1);
+            yield return null;
+        }
+    }
+
+    private IEnumerator PackageMoveDown()
+    {
+        while (true)
+        {
+            baggageInScanner.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -1);
+            yield return null;
+        }
     }
 }
