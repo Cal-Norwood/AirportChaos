@@ -11,6 +11,7 @@ public class BagageScan : MonoBehaviour
 
     public GameObject baggageInScanner;
     public BoxCollider checkPointCollider;
+    public bool endOfConveyor = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,10 +24,12 @@ public class BagageScan : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(BoxCollider other)
     {
         if (other.tag == "Pickup")
         {
+            Debug.Log("woking");
+            endOfConveyor = false;
             approve.interactable = true;
             deny.interactable = true;
             baggageInScanner = other.gameObject.transform.parent.gameObject;
@@ -47,7 +50,7 @@ public class BagageScan : MonoBehaviour
 
     private IEnumerator PackageMoveUp()
     {
-        while(true)
+        while(endOfConveyor == true)
         {
             baggageInScanner.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 1);
             yield return null;
@@ -56,10 +59,19 @@ public class BagageScan : MonoBehaviour
 
     private IEnumerator PackageMoveDown()
     {
-        while (true)
+        while (endOfConveyor == false)
         {
             baggageInScanner.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -1);
             yield return null;
+        }
+    }
+
+    private void OnTriggerEnter(SphereCollider other)
+    {
+        if (other.tag == "Pickup")
+        {
+            Debug.Log("woking");
+            endOfConveyor = true;
         }
     }
 }
