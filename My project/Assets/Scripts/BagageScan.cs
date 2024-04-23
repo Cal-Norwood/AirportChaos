@@ -21,15 +21,13 @@ public class BagageScan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(endOfConveyor);
     }
 
-    private void OnTriggerEnter(BoxCollider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Pickup")
         {
-            Debug.Log("woking");
-            endOfConveyor = false;
             approve.interactable = true;
             deny.interactable = true;
             baggageInScanner = other.gameObject.transform.parent.gameObject;
@@ -50,11 +48,16 @@ public class BagageScan : MonoBehaviour
 
     private IEnumerator PackageMoveUp()
     {
-        while(endOfConveyor == true)
+        while(endOfConveyor == false)
         {
+            Debug.Log("woking");
             baggageInScanner.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 1);
             yield return null;
         }
+
+        baggageInScanner.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+        endOfConveyor = false;
+        checkPointCollider.isTrigger = false;
     }
 
     private IEnumerator PackageMoveDown()
@@ -64,14 +67,9 @@ public class BagageScan : MonoBehaviour
             baggageInScanner.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -1);
             yield return null;
         }
-    }
 
-    private void OnTriggerEnter(SphereCollider other)
-    {
-        if (other.tag == "Pickup")
-        {
-            Debug.Log("woking");
-            endOfConveyor = true;
-        }
+        baggageInScanner.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+        endOfConveyor = false;
+        checkPointCollider.isTrigger = false;
     }
 }
