@@ -12,6 +12,7 @@ public class BagageScan : MonoBehaviour
     public GameObject baggageInScanner;
     public BoxCollider checkPointCollider;
     public bool endOfConveyor = false;
+    public ConveyorMove CM;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,12 +37,14 @@ public class BagageScan : MonoBehaviour
 
     public void Approve()
     {
+        CM.conveyorSpeed = 10;
         checkPointCollider.isTrigger = true;
         StartCoroutine(PackageMoveUp());
     }
 
     public void Deny()
     {
+        CM.conveyorSpeed = 10;
         checkPointCollider.isTrigger = true;
         StartCoroutine(PackageMoveDown());
     }
