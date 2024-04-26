@@ -865,8 +865,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 80460647}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.299313, y: 25.207855, z: -30.328617}
-  m_LocalScale: {x: 1.5, y: 3, z: 0.05}
+  m_LocalPosition: {x: -19.722, y: 25.207855, z: -30.328617}
+  m_LocalScale: {x: 0.5, y: 3, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2063695182}
@@ -1575,7 +1575,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0, g: 0.03323187, b: 0.6431373, a: 1}
+  m_Color: {r: 0.20496617, g: 0.24006674, b: 0.9245283, a: 1}
   m_Intensity: 25
   m_Range: 10
   m_SpotAngle: 30
@@ -3669,7 +3669,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.048102148, g: 0.016242431, b: 0.6886792, a: 0.85882354}
+      maxColor: {r: 0.23091269, g: 0.19339621, b: 1, a: 0.85882354}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -18529,6 +18529,8 @@ MonoBehaviour:
   - {fileID: 1833471416}
   - {fileID: 1287999665}
   - {fileID: 1015183511}
+  - {fileID: 1217142460}
+  - {fileID: 209688696}
   safeBag: {fileID: 8315935869803401246, guid: 4062783ba0f3631489b7494427f4fc10, type: 3}
   contrabandBag: {fileID: 8315935869803401246, guid: cc745423466f21f479b48f93b910909b, type: 3}
   bagMax: 7
