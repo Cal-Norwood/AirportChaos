@@ -24,6 +24,10 @@ public class RoundManager : MonoBehaviour
     public GameObject safeBag;
     public GameObject contrabandBag;
 
+    public Image Timer;
+
+    private bool quotaReached = false;
+
     public int bagMax;
     // Start is called before the first frame update
     void Start()
@@ -40,7 +44,21 @@ public class RoundManager : MonoBehaviour
 
     private IEnumerator RoundTimer()
     {
-        yield return new WaitForSeconds(120);
+        for (float i = 0; i < 120; i++)
+        {
+            var alphaVal = Timer.color;
+            if(i < 105)
+            {
+                alphaVal.a = i / 765;
+            }
+            else
+            {
+                alphaVal.a += 0.058f;
+            }
+            Timer.color = alphaVal;
+            yield return new WaitForSeconds(1f);
+            Debug.Log(alphaVal.a);
+        }
         Debug.Log("RoundsOver");
     }
 
@@ -62,6 +80,7 @@ public class RoundManager : MonoBehaviour
 
         if(totalGreenProgress == 4)
         {
+            quotaReached = true;
             foreach(Image i in progressBar)
             {
                 i.color = Color.green;
@@ -84,9 +103,12 @@ public class RoundManager : MonoBehaviour
             }
         }
 
-        if(totalRedProgress < 4)
+        if(quotaReached == false)
         {
-            passMarker.rectTransform.position = passMarker.rectTransform.position + new Vector3(100, 0, 0);
+            if (totalRedProgress < 4)
+            {
+                passMarker.rectTransform.position = passMarker.rectTransform.position + new Vector3(100, 0, 0);
+            }
         }
     }
 
