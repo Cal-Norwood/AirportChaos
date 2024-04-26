@@ -13,6 +13,7 @@ public class ComputerDisplay : MonoBehaviour
     public GameObject escapeButton;
     public GameObject approveButton;
     public GameObject denyButton;
+    public GameObject processing;
 
     public Material screenDefault;
     // Start is called before the first frame update
@@ -67,5 +68,6 @@ public class ComputerDisplay : MonoBehaviour
         escapeButton.SetActive(false);
         approveButton.SetActive(false);
         denyButton.SetActive(false);
+        processing.SetActive(false);
     }
 }

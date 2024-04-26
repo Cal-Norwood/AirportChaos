@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConveyorMove : MonoBehaviour
+public class ConveyorMoveBack : MonoBehaviour
 {
     private Rigidbody rb;
     public float conveyorSpeed;
 
-    public bool packageApproved;
-    public bool packageDenied;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +16,7 @@ public class ConveyorMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.position -= -transform.right * conveyorSpeed * Time.deltaTime;
-        rb.MovePosition(rb.position + -transform.right * conveyorSpeed * Time.deltaTime);
+        rb.position -= -transform.forward * conveyorSpeed * Time.deltaTime;
+        rb.MovePosition(rb.position + -transform.forward * conveyorSpeed * Time.deltaTime);
     }
 }

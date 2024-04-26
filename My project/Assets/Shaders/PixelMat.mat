@@ -37,7 +37,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ColourResolution: 10
+    - _ColourResolution: 23.54
     - _DitherSpread: 0.1
     - _PixelAmount: 284.96
     - _PixelRatio: 0.3

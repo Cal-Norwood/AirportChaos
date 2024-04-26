@@ -12,7 +12,11 @@ public class BagageScan : MonoBehaviour
     public GameObject baggageInScanner;
     public BoxCollider checkPointCollider;
     public bool endOfConveyor = false;
-    public ConveyorMove CM;
+    public ConveyorMoveRight CM;
+
+    public GameObject processing;
+
+    public GameObject divider;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +26,12 @@ public class BagageScan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(endOfConveyor);
+        if(endOfConveyor == true)
+        {
+            divider.GetComponent<ConveyorMoveBack>().enabled = false;
+            divider.GetComponent<ConveyorMoveForward>().enabled = false;
+            CM.conveyorSpeed = 5;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,42 +46,47 @@ public class BagageScan : MonoBehaviour
 
     public void Approve()
     {
-        CM.conveyorSpeed = 10;
-        checkPointCollider.isTrigger = true;
+        processing.SetActive(true);
+        approve.interactable = false;
+        deny.interactable = false;
+        CM.conveyorSpeed = 20;
         StartCoroutine(PackageMoveUp());
     }
 
     public void Deny()
     {
-        CM.conveyorSpeed = 10;
-        checkPointCollider.isTrigger = true;
+        processing.SetActive(true);
+        approve.interactable = false;
+        deny.interactable = false;
+        CM.conveyorSpeed = 20;
         StartCoroutine(PackageMoveDown());
     }
 
     private IEnumerator PackageMoveUp()
     {
-        while(endOfConveyor == false)
+        divider.GetComponent<ConveyorMoveForward>().enabled = true;
+        while (endOfConveyor == false)
         {
-            Debug.Log("woking");
-            baggageInScanner.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 1);
+            Physics.IgnoreCollision(checkPointCollider, baggageInScanner.GetComponentInChildren<BoxCollider>(), true);
             yield return null;
         }
 
-        baggageInScanner.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+        yield return new WaitForSeconds(1f);
+        Physics.IgnoreCollision(checkPointCollider, baggageInScanner.GetComponentInChildren<BoxCollider>(), false);
         endOfConveyor = false;
-        checkPointCollider.isTrigger = false;
     }
 
     private IEnumerator PackageMoveDown()
     {
+        divider.GetComponent<ConveyorMoveBack>().enabled = true;
         while (endOfConveyor == false)
         {
-            baggageInScanner.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -1);
+            Physics.IgnoreCollision(checkPointCollider, baggageInScanner.GetComponentInChildren<BoxCollider>(), true);
             yield return null;
         }
 
-        baggageInScanner.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+        yield return new WaitForSeconds(1f);
+        Physics.IgnoreCollision(checkPointCollider, baggageInScanner.GetComponentInChildren<BoxCollider>(), false);
         endOfConveyor = false;
-        checkPointCollider.isTrigger = false;
     }
 }
