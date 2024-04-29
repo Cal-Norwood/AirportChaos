@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class RoundManager : MonoBehaviour
 {
@@ -29,9 +30,14 @@ public class RoundManager : MonoBehaviour
     private bool quotaReached = false;
 
     public int bagMax;
+
+    public TextMeshProUGUI bagCount;
+    public TextMeshProUGUI quotaInfo;
+    public TextMeshProUGUI quotaSuccess;
     // Start is called before the first frame update
     void Start()
     {
+        bagCount.text = "4";
         StartCoroutine(RoundTimer());
         StartCoroutine(BagSpawner());
     }
@@ -39,7 +45,7 @@ public class RoundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private IEnumerator RoundTimer()
@@ -78,13 +84,21 @@ public class RoundManager : MonoBehaviour
         currentRedProgress++;
         totalGreenProgress++;
 
-        if(totalGreenProgress == 4)
+        if (totalGreenProgress == 4)
         {
             quotaReached = true;
-            foreach(Image i in progressBar)
+            foreach (Image i in progressBar)
             {
                 i.color = Color.green;
             }
+            bagCount.enabled = false;
+            quotaInfo.enabled = false;
+            quotaSuccess.enabled = true;
+        }
+        else if (totalGreenProgress < 4)
+        {
+            int displayAmount = 4 - currentGreenProgress;
+            bagCount.text = displayAmount.ToString();
         }
     }
 
