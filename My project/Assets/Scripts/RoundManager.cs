@@ -18,6 +18,8 @@ public class RoundManager : MonoBehaviour
     public GameObject incinirator;
     public GameObject safeCollector;
 
+    private bool quotaFufilled = false;
+
     public Image passMarker;
 
     public Transform[] bagSpawn;
@@ -53,17 +55,24 @@ public class RoundManager : MonoBehaviour
         for (float i = 0; i < 120; i++)
         {
             var alphaVal = Timer.color;
-            if(i < 105)
+            if(quotaFufilled == false)
             {
-                alphaVal.a = i / 765;
+                if (i < 105)
+                {
+                    alphaVal.a = i / 765;
+                }
+                else
+                {
+                    alphaVal.a += 0.058f;
+                }
+                Timer.color = alphaVal;
+                yield return new WaitForSeconds(1f);
             }
             else
             {
-                alphaVal.a += 0.058f;
+                alphaVal.a -= i / 400;
+                Timer.color = alphaVal;
             }
-            Timer.color = alphaVal;
-            yield return new WaitForSeconds(1f);
-            Debug.Log(alphaVal.a);
         }
         Debug.Log("RoundsOver");
     }
@@ -91,6 +100,7 @@ public class RoundManager : MonoBehaviour
             {
                 i.color = Color.green;
             }
+            quotaFufilled = true;
             bagCount.enabled = false;
             quotaInfo.enabled = false;
             quotaSuccess.enabled = true;
