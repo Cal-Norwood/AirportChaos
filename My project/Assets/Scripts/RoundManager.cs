@@ -36,10 +36,13 @@ public class RoundManager : MonoBehaviour
     public TextMeshProUGUI bagCount;
     public TextMeshProUGUI quotaInfo;
     public TextMeshProUGUI quotaSuccess;
+
+    public TextMeshProUGUI timer;
     // Start is called before the first frame update
     void Start()
     {
         bagCount.text = "4";
+        StartCoroutine(RoundTimerFade());
         StartCoroutine(RoundTimer());
         StartCoroutine(BagSpawner());
     }
@@ -50,7 +53,7 @@ public class RoundManager : MonoBehaviour
 
     }
 
-    private IEnumerator RoundTimer()
+    private IEnumerator RoundTimerFade()
     {
         for (float i = 0; i < 120; i++)
         {
@@ -70,10 +73,25 @@ public class RoundManager : MonoBehaviour
             }
             else
             {
-                alphaVal.a -= i / 400;
-                Timer.color = alphaVal;
+                for (int a = 0; a < 100; a++)
+                {
+                    alphaVal.a -= 0.01f;
+                    Timer.color = alphaVal;
+                    yield return new WaitForSeconds(0.2f);
+                }
             }
         }
+    }
+
+    private IEnumerator RoundTimer()
+    {
+        for(int i = 0; i < 120; i++)
+        {
+            int timeRemaining = 120 - i;
+            timer.text = timeRemaining.ToString();
+            yield return new WaitForSeconds(1);
+        }
+        timer.text = "0";
         Debug.Log("RoundsOver");
     }
 
